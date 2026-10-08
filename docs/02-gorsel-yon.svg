@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1140" viewBox="0 0 1600 1140" role="img" aria-labelledby="title desc">
+  <title id="title">KERTE — Koyu ve sinematik marka konsepti</title>
+  <desc id="desc">KERTE çalışma adıyla hazırlanan görsel yön. Kömür siyahı, kırık beyaz ve bakır turuncu. Büyük Fikrin, çalışan hâli başlığı yanında deneyim, uygulama ve altyapı katmanlarına ayrılan örnek bir ürün yüzeyi. Bu görsel bir tasarım konseptidir.</desc>
+  <defs>
+    <linearGradient id="canvas" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#181B20"/>
+      <stop offset="0.48" stop-color="#111318"/>
+      <stop offset="1" stop-color="#191B21"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#252C35"/>
+      <stop offset="0.7" stop-color="#171C24"/>
+      <stop offset="1" stop-color="#20252E"/>
+    </linearGradient>
+    <linearGradient id="stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#788492"/>
+      <stop offset="0.5" stop-color="#3B444F"/>
+      <stop offset="1" stop-color="#252C35"/>
+    </linearGradient>
+    <linearGradient id="copper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFBA93"/>
+      <stop offset="0.45" stop-color="#F0784A"/>
+      <stop offset="1" stop-color="#A4482A"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#9B4F31" stop-opacity="0.18"/>
+      <stop offset="0.58" stop-color="#66412F" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#0B0D10" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="190%" height="210%">
+      <feDropShadow dx="2" dy="28" stdDeviation="20" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#6C7788" stroke-opacity="0.13" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="1140" fill="url(#canvas)"/>
+  <g font-family="Manrope, 'Segoe UI', Arial, sans-serif">
+    <text x="80" y="87" fill="#F1EEE8" font-size="35" font-weight="600" letter-spacing="-1">Görünen yüz. Çalışan sistem.</text>
+    <text x="82" y="121" fill="#A5ADB9" font-size="15">KERTE / çalışma adı · Türkiye → global · Koyu ve sinematik</text>
+    <text x="1520" y="82" fill="#A5ADB9" font-family="'IBM Plex Mono', Consolas, monospace" font-size="12" letter-spacing="1.2" text-anchor="end">KİMLİK + DENEYİM</text>
+    <text x="1520" y="108" fill="#F0784A" font-family="'IBM Plex Mono', Consolas, monospace" font-size="12" letter-spacing="1.2" text-anchor="end">KONSEPT 01 / 06.10.2026</text>
+
+    <rect x="80" y="166" width="1440" height="752" rx="5" fill="#0B0D10" stroke="#363B43"/>
+    <ellipse cx="1190" cy="532" rx="363" ry="321" fill="url(#glow)"/>
+
+    <!-- Wordmark and navigation -->
+    <g transform="translate(126 200)" fill="none" stroke="#F0784A" stroke-width="3.2" stroke-linecap="square">
+      <path d="M0 0V27M10 12L24 0M10 15L24 27"/>
+    </g>
+    <text x="164" y="224" fill="#F1EEE8" font-size="26" font-weight="650" letter-spacing="1.2">KERTE</text>
+    <text x="983" y="219" fill="#B2B8C1" font-size="13">İşler</text>
+    <text x="1041" y="219" fill="#B2B8C1" font-size="13">Yaklaşım</text>
+    <text x="1128" y="219" fill="#B2B8C1" font-size="13">Stüdyo</text>
+    <rect x="1268" y="194" width="205" height="41" rx="3" fill="#15171B" stroke="#484038"/>
+    <text x="1287" y="219" fill="#F1EEE8" font-size="13">Projenizi anlatın</text>
+    <path d="M1438 221L1448 211M1438 211H1448V221" stroke="#F0784A" stroke-width="1.5" fill="none"/>
+    <path d="M126 260H1474" stroke="#272B31" stroke-width="1"/>
+
+    <!-- Hero typography -->
+    <circle cx="132" cy="327" r="3.5" fill="#F0784A"/>
+    <text x="148" y="332" fill="#B9BDC4" font-family="'IBM Plex Mono', Consolas, monospace" font-size="11" letter-spacing="1.6">BAĞIMSIZ DİJİTAL ÜRÜN STÜDYOSU</text>
+    <text x="121" y="449" fill="#F1EEE8" font-size="105" font-weight="600" letter-spacing="-6">Fikrin,</text>
+    <text x="121" y="557" fill="#F1EEE8" font-size="105" font-weight="600" letter-spacing="-6">çalışan hâli.</text>
+    <path d="M131 581H207" stroke="#F0784A" stroke-width="3"/>
+    <text x="128" y="631" fill="#A5ADB9" font-size="21">Web, mobil ve kurumsal yazılım.</text>
+    <text x="128" y="663" fill="#A5ADB9" font-size="21">Üç kişilik ekiple, fikirden yayına.</text>
+
+    <rect x="127" y="710" width="216" height="54" rx="3" fill="#F0784A"/>
+    <text x="148" y="743" fill="#111318" font-size="15" font-weight="650">Projenizi anlatın</text>
+    <path d="M309 744L319 734M309 734H319V744" stroke="#111318" stroke-width="1.7" fill="none"/>
+    <circle cx="383" cy="737" r="17" fill="none" stroke="#58606C"/>
+    <path d="M379 731L389 737L379 743Z" fill="#F1EEE8"/>
+    <text x="412" y="742" fill="#CED0D5" font-size="13">20 saniyede yaklaşımımız</text>
+
+    <!-- Product exploded view: all content is a concept illustration -->
+    <g transform="rotate(-12 1146 532)">
+      <g filter="url(#shadow)">
+        <rect x="948" y="533" width="440" height="225" rx="10" fill="#10151B" stroke="#394451"/>
+        <rect x="949" y="534" width="438" height="223" rx="9" fill="url(#grid)"/>
+        <path d="M999 677H1080V624H1198V697H1327" fill="none" stroke="#6A7890" stroke-width="1.6"/>
+        <path d="M1020 585V624H1258V649H1331" fill="none" stroke="#F0784A" stroke-opacity="0.65" stroke-width="1.6"/>
+        <g fill="#A5ADB9">
+          <circle cx="999" cy="677" r="3"/>
+          <circle cx="1198" cy="697" r="3"/>
+          <circle cx="1327" cy="697" r="3"/>
+        </g>
+        <g fill="#F0784A">
+          <circle cx="1020" cy="585" r="3"/>
+          <circle cx="1258" cy="649" r="3"/>
+          <circle cx="1331" cy="649" r="3"/>
+        </g>
+        <text x="969" y="735" fill="#7E8B9C" font-family="'IBM Plex Mono', Consolas, monospace" font-size="10" letter-spacing="1.5">03 / ALTYAPI</text>
+        <text x="1365" y="735" fill="#718091" font-family="'IBM Plex Mono', Consolas, monospace" font-size="10" text-anchor="end">VERİ · YAYIN</text>
+      </g>
+
+      <g filter="url(#shadow)">
+        <rect x="923" y="448" width="440" height="225" rx="10" fill="#151B22" fill-opacity="0.96" stroke="#4C5969"/>
+        <rect x="949" y="497" width="97" height="40" rx="4" fill="#202A34" stroke="#40505E"/>
+        <rect x="1088" y="497" width="97" height="40" rx="4" fill="#202A34" stroke="#40505E"/>
+        <rect x="1225" y="497" width="108" height="40" rx="4" fill="#2D2523" stroke="#765143"/>
+        <text x="997" y="522" fill="#A5ADB9" font-size="11" text-anchor="middle">Kullanıcı</text>
+        <text x="1136" y="522" fill="#A5ADB9" font-size="11" text-anchor="middle">İş akışı</text>
+        <text x="1279" y="522" fill="#F7AC88" font-size="11" text-anchor="middle">Entegrasyon</text>
+        <path d="M1046 517H1088M1185 517H1225M1136 537V588H1280" stroke="#687787" stroke-width="1.5" fill="none"/>
+        <circle cx="1280" cy="588" r="4" fill="#F0784A"/>
+        <text x="945" y="650" fill="#9CA9B8" font-family="'IBM Plex Mono', Consolas, monospace" font-size="10" letter-spacing="1.5">02 / UYGULAMA</text>
+        <text x="1340" y="650" fill="#8996A5" font-family="'IBM Plex Mono', Consolas, monospace" font-size="10" text-anchor="end">MANTIK · YETKİLER</text>
+      </g>
+
+      <g filter="url(#shadow)">
+        <rect x="897" y="350" width="440" height="254" rx="10" fill="url(#panel)" stroke="url(#stroke)" stroke-width="1.3"/>
+        <path d="M899 389H1335" stroke="#414A57"/>
+        <circle cx="914" cy="370" r="3" fill="#F0784A"/>
+        <circle cx="926" cy="370" r="3" fill="#738092"/>
+        <circle cx="938" cy="370" r="3" fill="#4C5969"/>
+        <text x="964" y="374" fill="#C5CDD6" font-size="11">Operasyon masası</text>
+        <rect x="1212" y="361" width="103" height="18" rx="3" fill="#2D2D2E" stroke="#615042"/>
+        <text x="1263" y="374" fill="#F8AB83" font-family="'IBM Plex Mono', Consolas, monospace" font-size="8" text-anchor="middle" letter-spacing="0.6">KONSEPT ÇALIŞMA</text>
+        <path d="M994 390V572" stroke="#303A47"/>
+        <rect x="910" y="407" width="71" height="23" rx="3" fill="#343A43"/>
+        <rect x="918" y="415" width="6" height="6" rx="1" fill="#F0784A"/>
+        <text x="930" y="422" fill="#E7E5E1" font-size="8">Genel bakış</text>
+        <text x="919" y="451" fill="#8995A5" font-size="9">Görevler</text>
+        <text x="919" y="478" fill="#8995A5" font-size="9">Ekip</text>
+        <text x="919" y="505" fill="#8995A5" font-size="9">Raporlar</text>
+        <text x="1010" y="421" fill="#F1EEE8" font-size="17" font-weight="550">Her şey, yerli yerinde.</text>
+        <text x="1011" y="443" fill="#93A0B1" font-size="9">İş akışınızın tek bir görünümü.</text>
+        <rect x="1011" y="459" width="175" height="99" rx="4" fill="#121821" stroke="#303B49"/>
+        <text x="1022" y="476" fill="#8F9FB1" font-size="8">Haftalık akış</text>
+        <path d="M1024 539H1173" stroke="#35404F"/>
+        <rect x="1032" y="516" width="13" height="23" rx="2" fill="#45566C"/>
+        <rect x="1056" y="499" width="13" height="40" rx="2" fill="#63758A"/>
+        <rect x="1080" y="509" width="13" height="30" rx="2" fill="#45566C"/>
+        <rect x="1104" y="491" width="13" height="48" rx="2" fill="#8C9AAD"/>
+        <rect x="1128" y="503" width="13" height="36" rx="2" fill="#63758A"/>
+        <rect x="1152" y="482" width="13" height="57" rx="2" fill="url(#copper)"/>
+        <rect x="1197" y="459" width="119" height="45" rx="4" fill="#1D252F" stroke="#384352"/>
+        <circle cx="1211" cy="473" r="3" fill="#D7B792"/>
+        <text x="1221" y="476" fill="#C6CBD1" font-size="8">Hazırlanıyor</text>
+        <path d="M1208 489H1301" stroke="#536073" stroke-width="3"/>
+        <rect x="1197" y="513" width="119" height="45" rx="4" fill="#1D252F" stroke="#384352"/>
+        <circle cx="1211" cy="527" r="3" fill="#A4C6AE"/>
+        <text x="1221" y="530" fill="#C6CBD1" font-size="8">Tamamlandı</text>
+        <path d="M1208 544H1277" stroke="#536073" stroke-width="3"/>
+        <path d="M898 573H1335" stroke="#3A4553"/>
+        <text x="916" y="593" fill="#C1CAD4" font-family="'IBM Plex Mono', Consolas, monospace" font-size="9" letter-spacing="1.2">01 / DENEYİM</text>
+        <text x="1314" y="593" fill="#8F9DAD" font-family="'IBM Plex Mono', Consolas, monospace" font-size="9" text-anchor="end">TASARIM · KULLANIM</text>
+      </g>
+    </g>
+
+    <path d="M1310 332L1398 309H1436" stroke="#8A5A43" fill="none"/>
+    <circle cx="1310" cy="332" r="3" fill="#F0784A"/>
+    <text x="1435" y="296" fill="#B59C8C" font-family="'IBM Plex Mono', Consolas, monospace" font-size="9" text-anchor="end" letter-spacing="1">ÜRÜNÜN KATMANLARI</text>
+
+    <path d="M126 837H1474" stroke="#272B31"/>
+    <text x="129" y="878" fill="#A5ADB9" font-family="'IBM Plex Mono', Consolas, monospace" font-size="10" letter-spacing="1.8">WEB / MOBİL / KURUMSAL</text>
+    <text x="805" y="878" fill="#6E7887" font-family="'IBM Plex Mono', Consolas, monospace" font-size="10" letter-spacing="1" text-anchor="middle">TASARIMDAN YAYINA</text>
+    <circle cx="1274" cy="874" r="3" fill="#F0784A"/>
+    <text x="1291" y="878" fill="#A5ADB9" font-size="12">3 kişi · doğrudan iletişim</text>
+
+    <!-- Art direction notes -->
+    <text x="82" y="972" fill="#87909E" font-family="'IBM Plex Mono', Consolas, monospace" font-size="11" letter-spacing="1.4">RENK / MALZEME</text>
+    <rect x="82" y="992" width="47" height="47" rx="3" fill="#0B0D10" stroke="#474C55"/>
+    <text x="141" y="1010" fill="#D5D6D8" font-size="12">Kömür</text>
+    <text x="141" y="1030" fill="#86909F" font-family="Consolas, monospace" font-size="11">#0B0D10</text>
+    <rect x="277" y="992" width="47" height="47" rx="3" fill="#F1EEE8"/>
+    <text x="336" y="1010" fill="#D5D6D8" font-size="12">Kırık beyaz</text>
+    <text x="336" y="1030" fill="#86909F" font-family="Consolas, monospace" font-size="11">#F1EEE8</text>
+    <rect x="492" y="992" width="47" height="47" rx="3" fill="#F0784A"/>
+    <text x="551" y="1010" fill="#D5D6D8" font-size="12">Bakır turuncu</text>
+    <text x="551" y="1030" fill="#86909F" font-family="Consolas, monospace" font-size="11">#F0784A</text>
+
+    <path d="M757 963V1040" stroke="#353A43"/>
+    <text x="810" y="977" fill="#87909E" font-family="'IBM Plex Mono', Consolas, monospace" font-size="11" letter-spacing="1.4">İMZA HAREKETİ</text>
+    <text x="810" y="1014" fill="#F1EEE8" font-size="24" font-weight="500" letter-spacing="-0.4">Tek yüzey. Üç katman. Çalışan ürün.</text>
+    <text x="810" y="1040" fill="#A5ADB9" font-size="13">Hassas geçişler · Asimetrik kompozisyon · Kontrollü ışık</text>
+
+    <path d="M82 1081H1520" stroke="#353A43"/>
+    <text x="82" y="1111" fill="#777F8E" font-size="11">Görsel yön eskizi · Marka adı öneridir · Ürün yüzeyi konsept çalışma olarak gösterilmiştir.</text>
+    <text x="1520" y="1111" fill="#777F8E" font-family="Consolas, monospace" font-size="11" text-anchor="end">01 / 01</text>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+{
+  "title": "Başlangıçtan güvenilir ürüne",
+  "fps": 60,
+  "durationInFrames": 3600,
+  "chapters": [
+    {
+      "id": "start",
+      "label": "Başlamak kolaylaştı",
+      "text": "Bugün yapay zekâ ile herkes bir uygulama geliştirebiliyor. Birkaç komutla ilk ekran ortaya çıkıyor.",
+      "estimatedSeconds": 7.5
+    },
+    {
+      "id": "reality",
+      "label": "Gerçek hayat devreye girer",
+      "text": "Ama bir demonun çalışması ürünün hazır olduğu anlamına gelmez. Aynı saate iki kişi randevu alırsa ne olacak? Bağlantı kesilirse veya yanlış kişi verilere ulaşırsa sistem ne yapacak?",
+      "estimatedSeconds": 11.5
+    },
+    {
+      "id": "design",
+      "label": "Tasarım gözü",
+      "text": "İyi tasarım neyin önemli olduğunu gösterir ve kullanıcıyı doğru yere götürür.",
+      "estimatedSeconds": 8
+    },
+    {
+      "id": "architecture",
+      "label": "Görünmeyen özen",
+      "text": "Kod tarafında sağlam bir mimari kuruyoruz. Veri modelini ve yetkileri netleştirip gerçek kullanım senaryolarını test ediyoruz.",
+      "estimatedSeconds": 8
+    },
+    {
+      "id": "craft",
+      "label": "Neden Decent Devs?",
+      "text": "Biz yapay zekâyı tecrübemiz ve tasarım becerimizle birlikte kullanıyoruz. Çıktıyı inceliyor ve gerekli yerlerde kodu kendimiz düzeltiyoruz.",
+      "estimatedSeconds": 10
+    },
+    {
+      "id": "delivery",
+      "label": "Sonuca kadar",
+      "text": "Web, mobil ya da size özel bir sistem geliştiriyoruz. İhtiyacı netleştiriyor, ürünü test ediyor ve yayına kadar sorumluluk alıyoruz.",
+      "estimatedSeconds": 12
+    },
+    {
+      "id": "signature",
+      "label": "Good enough.",
+      "text": "Decent Devs. Good enough.",
+      "estimatedSeconds": 3
+    }
+  ]
+}

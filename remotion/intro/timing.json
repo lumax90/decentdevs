@@ -1,0 +1,176 @@
+{
+  "ready": true,
+  "fps": 60,
+  "durationInFrames": 3600,
+  "bpm": 120,
+  "voiceId": "AbeORHEnJy68TSXZpg3m",
+  "speed": 1,
+  "chapters": [
+    {
+      "id": "start",
+      "voiceDurationInFrames": 394,
+      "durationInFrames": 450,
+      "from": 0,
+      "voiceFrom": 19
+    },
+    {
+      "id": "reality",
+      "voiceDurationInFrames": 696,
+      "durationInFrames": 780,
+      "from": 450,
+      "voiceFrom": 469
+    },
+    {
+      "id": "design",
+      "voiceDurationInFrames": 293,
+      "durationInFrames": 360,
+      "from": 1230,
+      "voiceFrom": 1249
+    },
+    {
+      "id": "architecture",
+      "voiceDurationInFrames": 485,
+      "durationInFrames": 570,
+      "from": 1590,
+      "voiceFrom": 1609
+    },
+    {
+      "id": "craft",
+      "voiceDurationInFrames": 548,
+      "durationInFrames": 600,
+      "from": 2160,
+      "voiceFrom": 2179
+    },
+    {
+      "id": "delivery",
+      "voiceDurationInFrames": 543,
+      "durationInFrames": 630,
+      "from": 2760,
+      "voiceFrom": 2779
+    },
+    {
+      "id": "signature",
+      "voiceDurationInFrames": 144,
+      "durationInFrames": 210,
+      "from": 3390,
+      "voiceFrom": 3409
+    }
+  ],
+  "captions": [
+    {
+      "start": 0.31666666666666665,
+      "end": 2.876666666666667,
+      "text": "Bugün yapay zekâ ile herkes bir uygulama"
+    },
+    {
+      "start": 2.876666666666667,
+      "end": 4.116666666666667,
+      "text": "geliştirebiliyor."
+    },
+    {
+      "start": 4.236666666666666,
+      "end": 7.076666666666666,
+      "text": "Birkaç komutla ilk ekran ortaya çıkıyor."
+    },
+    {
+      "start": 7.816666666666666,
+      "end": 10.616666666666667,
+      "text": "Ama bir demonun çalışması ürünün hazır olduğu"
+    },
+    {
+      "start": 10.616666666666667,
+      "end": 11.936666666666666,
+      "text": "anlamına gelmez."
+    },
+    {
+      "start": 12.056666666666667,
+      "end": 14.896666666666667,
+      "text": "Aynı saate iki kişi randevu alırsa ne olacak?"
+    },
+    {
+      "start": 15.016666666666666,
+      "end": 17.656666666666666,
+      "text": "Bağlantı kesilirse veya yanlış kişi verilere"
+    },
+    {
+      "start": 17.656666666666666,
+      "end": 19.616666666666667,
+      "text": "ulaşırsa sistem ne yapacak?"
+    },
+    {
+      "start": 20.816666666666666,
+      "end": 23.736666666666668,
+      "text": "İyi tasarım neyin önemli olduğunu gösterir ve"
+    },
+    {
+      "start": 23.776666666666667,
+      "end": 25.89666666666667,
+      "text": "kullanıcıyı doğru yere götürür."
+    },
+    {
+      "start": 26.816666666666666,
+      "end": 29.816666666666666,
+      "text": "Kod tarafında sağlam bir mimari kuruyoruz."
+    },
+    {
+      "start": 29.936666666666667,
+      "end": 32.81666666666666,
+      "text": "Veri modelini ve yetkileri netleştirip gerçek"
+    },
+    {
+      "start": 32.81666666666666,
+      "end": 35.096666666666664,
+      "text": "kullanım senaryolarını test ediyoruz."
+    },
+    {
+      "start": 36.31666666666667,
+      "end": 39.03666666666667,
+      "text": "Biz yapay zekâyı tecrübemiz ve tasarım"
+    },
+    {
+      "start": 39.03666666666667,
+      "end": 41.11666666666667,
+      "text": "becerimizle birlikte kullanıyoruz."
+    },
+    {
+      "start": 41.19666666666667,
+      "end": 43.99666666666667,
+      "text": "Çıktıyı inceliyor ve gerekli yerlerde kodu"
+    },
+    {
+      "start": 43.99666666666667,
+      "end": 45.63666666666666,
+      "text": "kendimiz düzeltiyoruz."
+    },
+    {
+      "start": 46.31666666666667,
+      "end": 48.95666666666667,
+      "text": "Web, mobil ya da size özel bir sistem"
+    },
+    {
+      "start": 48.95666666666667,
+      "end": 50.07666666666667,
+      "text": "geliştiriyoruz."
+    },
+    {
+      "start": 50.156666666666666,
+      "end": 52.99666666666667,
+      "text": "İhtiyacı netleştiriyor, ürünü test ediyor"
+    },
+    {
+      "start": 53.11666666666667,
+      "end": 55.556666666666665,
+      "text": "ve yayına kadar sorumluluk alıyoruz."
+    },
+    {
+      "start": 56.81666666666667,
+      "end": 58.21666666666667,
+      "text": "Decent Devs."
+    },
+    {
+      "start": 58.33666666666667,
+      "end": 59.416666666666664,
+      "text": "Good enough."
+    }
+  ]
+}

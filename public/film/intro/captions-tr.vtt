@@ -1,0 +1,70 @@
+WEBVTT
+
+00:00:00.317 --> 00:00:02.877
+Bugün yapay zekâ ile herkes bir uygulama
+
+00:00:02.877 --> 00:00:04.117
+geliştirebiliyor.
+
+00:00:04.237 --> 00:00:07.077
+Birkaç komutla ilk ekran ortaya çıkıyor.
+
+00:00:07.817 --> 00:00:10.617
+Ama bir demonun çalışması ürünün hazır olduğu
+
+00:00:10.617 --> 00:00:11.937
+anlamına gelmez.
+
+00:00:12.057 --> 00:00:14.897
+Aynı saate iki kişi randevu alırsa ne olacak?
+
+00:00:15.017 --> 00:00:17.657
+Bağlantı kesilirse veya yanlış kişi verilere
+
+00:00:17.657 --> 00:00:19.617
+ulaşırsa sistem ne yapacak?
+
+00:00:20.817 --> 00:00:23.737
+İyi tasarım neyin önemli olduğunu gösterir ve
+
+00:00:23.777 --> 00:00:25.897
+kullanıcıyı doğru yere götürür.
+
+00:00:26.817 --> 00:00:29.817
+Kod tarafında sağlam bir mimari kuruyoruz.
+
+00:00:29.937 --> 00:00:32.817
+Veri modelini ve yetkileri netleştirip gerçek
+
+00:00:32.817 --> 00:00:35.097
+kullanım senaryolarını test ediyoruz.
+
+00:00:36.317 --> 00:00:39.037
+Biz yapay zekâyı tecrübemiz ve tasarım
+
+00:00:39.037 --> 00:00:41.117
+becerimizle birlikte kullanıyoruz.
+
+00:00:41.197 --> 00:00:43.997
+Çıktıyı inceliyor ve gerekli yerlerde kodu
+
+00:00:43.997 --> 00:00:45.637
+kendimiz düzeltiyoruz.
+
+00:00:46.317 --> 00:00:48.957
+Web, mobil ya da size özel bir sistem
+
+00:00:48.957 --> 00:00:50.077
+geliştiriyoruz.
+
+00:00:50.157 --> 00:00:52.997
+İhtiyacı netleştiriyor, ürünü test ediyor
+
+00:00:53.117 --> 00:00:55.557
+ve yayına kadar sorumluluk alıyoruz.
+
+00:00:56.817 --> 00:00:58.217
+Decent Devs.
+
+00:00:58.337 --> 00:00:59.417
+Good enough.

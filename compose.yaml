@@ -1,0 +1,18 @@
+services:
+  website:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://decentdevs.com}
+        NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-}
+    env_file: .env
+    environment:
+      DATA_DIR: /app/data
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - brief-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  brief-data:

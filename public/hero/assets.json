@@ -1,0 +1,16 @@
+{
+  "source": "Orbit Delivery Hero / fadeichev2121/planet",
+  "revision": "b3f70fbf4b577845b1d9d5947c9410fb4d925dae",
+  "models": [
+    {
+      "name": "whimsical-world.glb",
+      "bytes": 2383684,
+      "sha256": "708cbe97e93b98382b98c1df3fed04acec5d4823dc283b2146d11bc2d2221459"
+    },
+    {
+      "name": "courier.glb",
+      "bytes": 2878400,
+      "sha256": "d7b7bc09d7e03c56fa3f2dbc9f110a46197d9454b35e45063d4fcdc07c2cdfc2"
+    }
+  ]
+}

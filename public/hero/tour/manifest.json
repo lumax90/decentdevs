@@ -1,0 +1,125 @@
+{
+  "generator": "Remotion",
+  "fps": 30,
+  "frames": 210,
+  "width": 640,
+  "height": 360,
+  "audio": false,
+  "scenes": [
+    {
+      "id": "tennis",
+      "composition": "TourTennis",
+      "location": "game"
+    },
+    {
+      "id": "react",
+      "composition": "TourReact",
+      "location": "react"
+    },
+    {
+      "id": "mobile",
+      "composition": "TourMobile",
+      "location": "mobile"
+    },
+    {
+      "id": "nextjs",
+      "composition": "TourNext",
+      "location": "nextjs"
+    },
+    {
+      "id": "rust",
+      "composition": "TourRust",
+      "location": "rust"
+    },
+    {
+      "id": "web",
+      "composition": "TourWeb",
+      "location": "website"
+    },
+    {
+      "id": "data",
+      "composition": "TourData",
+      "location": "postgresql"
+    },
+    {
+      "id": "workflow",
+      "composition": "TourWorkflow",
+      "location": "internal"
+    },
+    {
+      "id": "webapp",
+      "composition": "TourWebApp",
+      "location": "webapp"
+    },
+    {
+      "id": "nodejs",
+      "composition": "TourNode",
+      "location": "nodejs"
+    },
+    {
+      "id": "python",
+      "composition": "TourPython",
+      "location": "python"
+    },
+    {
+      "id": "typescript",
+      "composition": "TourTypeScript",
+      "location": "typescript"
+    },
+    {
+      "id": "flutter",
+      "composition": "TourFlutter",
+      "location": "flutter"
+    },
+    {
+      "id": "go",
+      "composition": "TourGo",
+      "location": "go"
+    },
+    {
+      "id": "swift",
+      "composition": "TourSwift",
+      "location": "swift"
+    },
+    {
+      "id": "kotlin",
+      "composition": "TourKotlin",
+      "location": "kotlin"
+    },
+    {
+      "id": "csharp",
+      "composition": "TourCSharp",
+      "location": "csharp"
+    },
+    {
+      "id": "dotnet",
+      "composition": "TourDotNet",
+      "location": "dotnet"
+    },
+    {
+      "id": "redis",
+      "composition": "TourRedis",
+      "location": "redis"
+    },
+    {
+      "id": "docker",
+      "composition": "TourDocker",
+      "location": "docker"
+    },
+    {
+      "id": "unity",
+      "composition": "TourUnity",
+      "location": "unity"
+    },
+    {
+      "id": "graphql",
+      "composition": "TourGraphQL",
+      "location": "graphql"
+    },
+    {
+      "id": "webgl",
+      "composition": "TourWebGL",
+      "location": "webgl"
+    }
+  ]
+}

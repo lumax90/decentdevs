@@ -1,0 +1,11 @@
+{
+  "name": "Markus Kästler — Türkçe ses denemesi",
+  "voiceId": "AbeORHEnJy68TSXZpg3m",
+  "modelId": "eleven_v4",
+  "text": "Bugün yapay zekâ ile herkes bir uygulama geliştirebiliyor. Ama bir demonun çalışması ürünün hazır olduğu anlamına gelmez. Biz tecrübemizi ve yapay zekâyı birlikte kullanıyor, fikrinizi çalışan bir ürüne dönüştürüyoruz. Decent Devs. Good enough.",
+  "settings": {
+    "stability": 0.36,
+    "similarity_boost": 1,
+    "speed": 1
+  }
+}

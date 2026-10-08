@@ -1,0 +1,13 @@
+Bugün yapay zekâ ile herkes bir uygulama geliştirebiliyor. Birkaç komutla ilk ekran ortaya çıkıyor.
+
+Ama bir demonun çalışması ürünün hazır olduğu anlamına gelmez. Aynı saate iki kişi randevu alırsa ne olacak? Bağlantı kesilirse veya yanlış kişi verilere ulaşırsa sistem ne yapacak?
+
+İyi tasarım neyin önemli olduğunu gösterir ve kullanıcıyı doğru yere götürür.
+
+Kod tarafında sağlam bir mimari kuruyoruz. Veri modelini ve yetkileri netleştirip gerçek kullanım senaryolarını test ediyoruz.
+
+Biz yapay zekâyı tecrübemiz ve tasarım becerimizle birlikte kullanıyoruz. Çıktıyı inceliyor ve gerekli yerlerde kodu kendimiz düzeltiyoruz.
+
+Web, mobil ya da size özel bir sistem geliştiriyoruz. İhtiyacı netleştiriyor, ürünü test ediyor ve yayına kadar sorumluluk alıyoruz.
+
+Decent Devs. Good enough.
