@@ -88,7 +88,7 @@ npm run hero:surface
 Çalışan site üzerinden statik yedek görsel ve ekran görüntüleri:
 
 ```sh
-npm run dev -- --port 3001
+npm run dev
 # Ayrı terminal:
 npm run hero:poster
 npm run hero:capture

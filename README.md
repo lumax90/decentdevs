@@ -16,10 +16,10 @@ Node PATH üzerinde mevcutsa:
 
 ```sh
 npm install
-npm run dev -- --port 3001
+npm run dev
 ```
 
-Yerel önizleme: **http://localhost:3001**
+Yerel önizleme: **http://localhost:3000**
 
 ```sh
 npm run build

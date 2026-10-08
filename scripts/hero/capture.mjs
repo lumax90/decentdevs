@@ -2,7 +2,7 @@ import { chromium } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import sharp from 'sharp';
 
-const base = process.env.HERO_REVIEW_URL || 'http://localhost:3001';
+const base = process.env.HERO_REVIEW_URL || 'http://localhost:3000';
 const browser = await chromium.launch({ channel: 'chrome' });
 await mkdir('artifacts/hero', { recursive: true });
 try {

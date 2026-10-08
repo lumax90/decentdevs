@@ -12,7 +12,7 @@ try {
   const results = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
-  await page.goto(process.env.HERO_REVIEW_URL || 'http://localhost:3001');
+  await page.goto(process.env.HERO_REVIEW_URL || 'http://localhost:3000');
   const world = page.locator('[data-scene-state]');
   await page.waitForFunction(() => document.querySelector('[data-scene-state]')?.dataset.sceneState === 'ready');
   await world.scrollIntoViewIfNeeded();
