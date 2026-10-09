@@ -1,5 +1,11 @@
 # Decent Devs — 60 saniyelik anlatımlı film
 
+## Onaylı yayın seçimi — 8 Ekim 2026
+
+Sitede kullanılan dosya: `public/film/intro/music-previews/decent-devs-digital-gravity-voice-music.mp4`. 1920×1080, 60 FPS, tam 60 saniye. Ses **Markus / Eleven v4 + Digital Gravity**; ek efekt kazancı sıfır. Eşleşen altyazı `public/film/intro/decent-devs-intro-markus-v4.vtt`.
+
+Yerel ses kaynakları hazır olduğunda `npm run intro:approved`, `scripts/intro/music-preview.mjs --no-fx` üzerinden onaylı miksi oluşturur. Digital Gravity kaynağı `artifacts/intro/music-candidates/digital-gravity/source.wav`; seslendirme kaynakları ve bu müzik Git dışında tutulur. Yayın MP4'ü depoya dahildir.
+
 ## Ana fikir
 
 **Başlamak kolaylaştı. Güvenilir bir ürüne ulaşmak hâlâ özen ister.**
@@ -30,13 +36,13 @@ ElevenLabs, bölüm bölüm zaman damgalı konuşma üretir. Gerçek ses sürele
 
 ## Ses tasarımı
 
-Python ile özgün, sıcak elektronik müzik; yazma, seçim, uyarı, doğrulama ve geçiş vurguları. Konuşma sırasında müzik otomatik olarak geri çekilir. Ses, müzik ve efektlerin ayrı kaynakları korunur.
+Digital Gravity yaklaşık 120 BPM'dir ve 60 saniyelik kurguya yerleşir. Konuşma sırasında müzik otomatik olarak geri çekilir. Python zamanlama ve miks için kullanılır; ses katmanlarının ayrı kaynakları korunur.
 
 Güncel ses: **Markus Kästler — Rich, Masculine & Confident** (`AbeORHEnJy68TSXZpg3m`). Model: **Eleven v4** (`eleven_v4`). Kullanıcının verdiği örnek ve ses profilindeki değerler esas alındı: stabilite **0,36**, benzerlik **1,0**, hız **1,0**. Dil otomatik algılanır. V4'ün desteklemediği `style` ve `use_speaker_boost` alanları isteğe eklenmez. Markus'un ses profili Almanca kökenlidir; bu filmde Türkçe metin Eleven v4 ile seslendirilir.
 
 Üç noktalar kaldırıldı, gereksiz virgüller azaltıldı ve yarım ifadeler daha akıcı cümlelere dönüştürüldü. Yeni ses yaklaşık 51,68 saniyedir; 60 saniyelik kurguda ek hızlandırma kullanılmaz. Önceki renderlar `artifacts/intro/versions/before-markus-*` içinde yedeklendi. Kullanıcının beğendiği kısa ses referansı `artifacts/intro/reference-voice/markus-approved.mp3` dosyasıdır.
 
-Ana müzik, kaydırma ve onay efektleri de ElevenLabs kaynaklıdır. Python; zamanlama, ilave küçük vurgular, konuşmaya bağlı müzik kısma ve miks için kullanılır. Son miks iki geçişli loudness işlemiyle yaklaşık −16 LUFS seviyesine getirilir.
+Önceki müzik ve efekt denemeleri üretim kaynaklarında bulunur. Onaylı `--no-fx` miksinde bunların yerine Digital Gravity kullanılır ve ek efektler sıfırlanır. Son miks iki geçişli loudness işlemiyle yaklaşık −16 LUFS seviyesine getirilir.
 
 Önceki Sarah sesli sürüm ve ses kaynakları `artifacts/intro/revisions/sarah-v1/` içinde saklanır.
 
@@ -63,7 +69,9 @@ npm run intro:sound
 npm run intro:prepare
 npm run intro:contact-sheet
 npm run intro:render
-npm run intro:verify
+npm run intro:approved
+npm run intro:poster
+npm run intro:verify -- public/film/intro/music-previews/decent-devs-digital-gravity-voice-music.mp4
 ```
 
 Markus / v4 sürümünü ayrı dosya olarak üretmek ve kontrol etmek için:
@@ -73,10 +81,12 @@ npm run intro:render -- --output public/film/intro/decent-devs-intro-markus-v4.m
 npm run intro:verify -- public/film/intro/decent-devs-intro-markus-v4.mp4
 ```
 
-- Güncel video: `public/film/intro/decent-devs-intro-markus-v4.mp4`
+- Yayın videosu: `public/film/intro/music-previews/decent-devs-digital-gravity-voice-music.mp4`
+- Yeniden miks için temel video: `public/film/intro/decent-devs-intro-markus-v4.mp4`
 - Önceki videolar: `public/film/intro/decent-devs-intro.mp4`, `public/film/intro/decent-devs-intro-tr.mp4`
-- Altyazı: `public/film/intro/captions-tr.vtt`
-- Kapak: `public/film/intro/poster.jpg`
+- Yayın altyazısı: `public/film/intro/decent-devs-intro-markus-v4.vtt`
+- Kapak: `public/film/intro/poster-04.jpg` (04 marka işareti, hafif tebessüm)
+- Mobil kapak: `public/film/intro/poster-04-mobile.webp`
 - Metin: `public/film/intro/narration.txt`
 - Kaynaklar: `remotion/intro/`
 - Ses katmanları, API önbelleği ve inceleme kareleri: `artifacts/intro/`

@@ -1,0 +1,15 @@
+.surface { width: max-content; padding: 14px 18px; margin: -14px -18px; font-family: var(--font-heading); }
+.scope[data-glass-cursor] { overflow: visible; }
+.scope:focus-visible { outline: none; }
+.scope:focus-visible > .surface { outline: 1px solid #c9b7f773; outline-offset: 4px; border-radius: 8px; }
+.heading { margin: 0 0 0 -.05em; font: inherit; text-align: left; }
+.firstLine { display: flex; align-items: baseline; gap: .12em; width: max-content; padding-right: .15em; white-space: nowrap; }
+.secret { font: inherit; font-style: italic; color: var(--world-bg); opacity: 0; user-select: none; }
+.secondLine { display: block; color: var(--lime); }
+.period { position: relative; display: inline-block; }
+/* The original ink matches the black surface; only the refracted copy catches light. */
+.scope [data-glass-copy] .secret { color: var(--world-ink); opacity: 1; }
+@media (max-width: 700px) {
+  .surface { width: calc(100% + 20px); padding-inline: 10px; margin-inline: -10px; }
+  .heading { width: max-content; margin-inline: auto; }
+}

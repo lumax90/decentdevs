@@ -96,16 +96,25 @@ export function MapLocations({ surface, orientation, centerY, labels, runner, se
       const label = labels.current[location.index];
       if (!label) continue;
       location.opacity = reduced ? location.targetOpacity : MathUtils.damp(location.opacity, location.targetOpacity, 12, Math.min(delta, 0.05));
-      const scale = location.id === selected ? 1.05 : 0.94 + Math.max(0, location.depth) * 0.06;
-      label.style.transform = `translate3d(${location.x.toFixed(1)}px, ${location.y.toFixed(1)}px, 0) translate(-50%, -100%) scale(${scale.toFixed(3)})`;
-      label.style.opacity = location.opacity.toFixed(3);
       const focused = document.activeElement === label;
-      label.style.visibility = location.opacity > 0.12 || focused ? 'visible' : 'hidden';
-      label.tabIndex = location.opacity > 0.45 || focused ? 0 : -1;
+      const visible = location.opacity > 0.12 || focused;
+      const visibility = visible ? 'visible' : 'hidden';
+      if (label.style.visibility !== visibility) label.style.visibility = visibility;
+      const tabIndex = location.opacity > 0.45 || focused ? 0 : -1;
+      if (label.tabIndex !== tabIndex) label.tabIndex = tabIndex;
+      if (visible) {
+        const scale = location.id === selected ? 1.05 : 0.94 + Math.max(0, location.depth) * 0.06;
+        const transform = `translate3d(${Math.round(location.x * 10) / 10}px, ${Math.round(location.y * 10) / 10}px, 0px) translate(-50%, -100%) scale(${Math.round(scale * 1000) / 1000})`;
+        if (label.style.transform !== transform) label.style.transform = transform;
+        const opacity = String(Math.round(location.opacity * 1000) / 1000);
+        if (label.style.opacity !== opacity) label.style.opacity = opacity;
+      }
       const nearby = motion.current.nearbyLocation === location.id && motion.current.dwellProgress > 0.03;
-      label.dataset.nearby = String(nearby);
-      label.dataset.atFeet = String(nearby && motion.current.dwellAtFeet);
-      label.style.setProperty('--dwell', nearby ? String(motion.current.dwellProgress) : '0');
+      const atFeet = String(nearby && motion.current.dwellAtFeet);
+      const dwell = nearby ? String(motion.current.dwellProgress) : '0';
+      if (label.dataset.nearby !== String(nearby)) label.dataset.nearby = String(nearby);
+      if (label.dataset.atFeet !== atFeet) label.dataset.atFeet = atFeet;
+      if (label.style.getPropertyValue('--dwell') !== dwell) label.style.setProperty('--dwell', dwell);
     }
   }, -0.5);
 

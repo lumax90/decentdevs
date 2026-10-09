@@ -46,11 +46,16 @@ assert.equal(measured.status, 0, measured.stderr.slice(-1500));
 const level = JSON.parse(measured.stderr.match(/\{\s*"input_i"[\s\S]*?\}/)?.[0] || 'null');
 assert.ok(level && Number(level.input_tp) <= -.5, 'Audio peaks need attention.');
 assert.ok(Math.abs(Number(level.input_i) + 16) < 1.5, 'Narration loudness needs attention.');
-const mixReport = JSON.parse(await readFile(join(WORK, 'mix-report.json'), 'utf8'));
+const approvedMix = basename(file) === 'decent-devs-digital-gravity-voice-music.mp4';
+const mixReport = JSON.parse(await readFile(approvedMix ? join(WORK, 'music-candidates', 'digital-gravity', 'voice-and-music', 'preview-report.json') : join(WORK, 'mix-report.json'), 'utf8'));
+if (approvedMix) {
+  assert.equal(mixReport.source, 'Digital_Gravity.wav');
+  assert.equal(mixReport.effectsEnabled, false, 'The approved mix contains voice and music only.');
+}
 const voiceMetadata = await Promise.all(script.chapters.map(c => readFile(join(WORK, 'voice', `${c.id}.json`), 'utf8').then(JSON.parse)));
 assert.ok(voiceMetadata.every(m => m.voiceId === timing.voiceId), 'Mixed voices in the source files.');
 assert.equal(new Set(voiceMetadata.map(m => m.modelId)).size, 1, 'Mixed models in the source files.');
-const result = { valid: true, file: basename(file), sha256: createHash('sha256').update(await readFile(file)).digest('hex'), voiceId: timing.voiceId, modelId: voiceMetadata[0].modelId, voiceSettings: voiceMetadata[0].settings, narrationLanguage: 'tr', voicePlaybackRate: timing.speed, musicSource: mixReport.musicSource, durationSeconds: Number(probe.format.duration), frames: Number(video.nb_frames), width: video.width, height: video.height, fps: 60, videoCodec: video.codec_name, audioCodec: audio.codec_name, captions: timing.captions.length, integratedLUFS: Number(level.input_i), truePeakDBTP: Number(level.input_tp), sizeMB: Number((Number(probe.format.size) / 1024 / 1024).toFixed(2)) };
+const result = { valid: true, file: basename(file), sha256: createHash('sha256').update(await readFile(file)).digest('hex'), voiceId: timing.voiceId, modelId: voiceMetadata[0].modelId, voiceSettings: voiceMetadata[0].settings, narrationLanguage: 'tr', voicePlaybackRate: timing.speed, musicSource: approvedMix ? 'Digital Gravity — user supplied' : mixReport.musicSource, ...(approvedMix ? { effectsEnabled: false } : {}), durationSeconds: Number(probe.format.duration), frames: Number(video.nb_frames), width: video.width, height: video.height, fps: 60, videoCodec: video.codec_name, audioCodec: audio.codec_name, captions: timing.captions.length, integratedLUFS: Number(level.input_i), truePeakDBTP: Number(level.input_tp), sizeMB: Number((Number(probe.format.size) / 1024 / 1024).toFixed(2)) };
 await writeFile(join(WORK, 'verification.json'), JSON.stringify(result, null, 2));
 await writeFile(join(WORK, `${basename(file, '.mp4')}-manifest.json`), JSON.stringify(result, null, 2));
 console.log(JSON.stringify(result, null, 2));

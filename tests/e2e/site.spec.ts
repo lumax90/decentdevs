@@ -8,7 +8,7 @@ test('homepage, product switcher and keyboard service navigation', async ({ page
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Good enough.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveAccessibleName('Good enough.');
   await page.getByRole('button', { name: 'Mobil', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Mobil', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('.stage-sakin')).toBeVisible();
@@ -145,6 +145,41 @@ test('the 3D hero reaches a selected destination, pauses, and carries a game ide
   await page.getByLabel('Bu fikir, neyi kolaylaştıracak?').fill('Arkadaşların birlikte bulmaca çözebileceği bir oyun istiyorum.');
   await page.getByRole('button', { name: 'Devam', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Çok oyunculu deneyim', exact: true })).toBeVisible();
+});
+
+test('a disconnected brief can retry the same submission and stays consistent while saving', async ({ page }) => {
+  const draft = fixture({ email: `retry-${randomUUID()}@example.com` });
+  await page.addInitScript(draft => {
+    sessionStorage.setItem('decent-project-v1', JSON.stringify({ draft, step: 4, savedAt: Date.now() }));
+  }, draft);
+  const keys: string[] = [];
+  let release!: () => void;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  await page.route('**/api/brief', async route => {
+    keys.push(route.request().headers()['idempotency-key']);
+    if (keys.length === 1) { await route.abort('internetdisconnected'); return; }
+    await pending;
+    await route.continue();
+  });
+  await page.goto('/baslayalim');
+  const email = page.getByLabel('E-posta adresin');
+  await expect(email).toHaveValue(draft.email);
+  await page.getByRole('button', { name: 'Notumu gönder' }).click();
+  await expect(page.locator('.brief-form').getByRole('alert')).toContainText('Bağlantıyı kontrol edip tekrar deneyebilir misin?');
+  await expect(email).toBeEnabled();
+  await expect(email).toHaveValue(draft.email);
+  await page.getByRole('button', { name: 'Notumu gönder' }).click();
+  await expect(email).toBeDisabled();
+  await expect(page.getByLabel('Adın', { exact: true })).toBeDisabled();
+  await expect(page.locator('button[aria-label="Proje fikrini düzenle"]')).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Yeni bir başlangıç' })).toBeDisabled();
+  release();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Notunu aldık');
+  await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
+  expect(keys).toHaveLength(2);
+  expect(keys[0]).toBeTruthy();
+  expect(keys[1]).toBe(keys[0]);
+  expect(await page.evaluate(() => sessionStorage.getItem('decent-project-v1'))).toBeNull();
 });
 
 test('the hero recovers from a model failure and respects reduced motion', async ({ page }) => {

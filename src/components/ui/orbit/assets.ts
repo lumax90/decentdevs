@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FrontSide, Mesh, MeshStandardMaterial, SkinnedMesh, Texture, type BufferGeometry, type Material, type Object3D, type Skeleton } from 'three';
+import { FrontSide, Mesh, MeshStandardMaterial, SkinnedMesh, Texture, type BufferGeometry, type Material, type Object3D, type Skeleton, type WebGLRenderer } from 'three';
 import { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { createCourierRig, type CourierRig } from './courier-rig';
@@ -28,7 +28,25 @@ export function disposeScene(scene: Object3D) {
 
 export interface WorldAssets { planet: GLTF['scene']; courier: CourierRig; surface: SurfaceMap }
 
-export function useWorldAssets(base: string) {
+async function prepareTextures(asset: WorldAssets, renderer: WebGLRenderer, signal: AbortSignal) {
+  const textures = new Set<Texture>();
+  const collect = (node: Object3D) => {
+    if (!(node instanceof Mesh)) return;
+    for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+      for (const value of Object.values(material)) if (value instanceof Texture) textures.add(value);
+    }
+  };
+  asset.planet.traverse(collect);
+  asset.courier.scene.traverse(collect);
+  // Spread GPU uploads across tasks so buttons and scrolling remain responsive.
+  for (const texture of textures) {
+    await new Promise<void>(resolve => setTimeout(resolve, 0));
+    signal.throwIfAborted();
+    renderer.initTexture(texture);
+  }
+}
+
+export function useWorldAssets(base: string, renderer: WebGLRenderer) {
   const [asset, setAsset] = useState<WorldAssets | null>(null);
   const [error, setError] = useState<Error | null>(null);
   useEffect(() => {
@@ -56,7 +74,7 @@ export function useWorldAssets(base: string) {
     Promise.all([
       loadModel('whimsical-world.glb'), loadModel('courier.glb'),
       fetchChecked(`${base}models/surface.json`).then(response => response.json() as Promise<SurfaceMap>),
-    ]).then(([planet, model, surface]) => {
+    ]).then(async ([planet, model, surface]) => {
       if (cancelled || !planet || !model) return;
       if (!Number.isInteger(surface.width) || !Number.isInteger(surface.height) || surface.width < 2 || surface.height < 2 || surface.radii?.length !== surface.width * surface.height || surface.radii.some(radius => !Number.isFinite(radius) || radius <= 0)) throw new Error('Invalid planet surface.');
       planet.scene.traverse(node => {
@@ -74,7 +92,9 @@ export function useWorldAssets(base: string) {
         }
       });
       courier = createCourierRig(model);
-      setAsset({ planet: planet.scene, courier, surface });
+      const loaded = { planet: planet.scene, courier, surface };
+      await prepareTextures(loaded, renderer, signal);
+      if (!cancelled) setAsset(loaded);
     }).catch(reason => {
       if (!cancelled) setError(reason instanceof Error ? reason : new Error(String(reason)));
     }).finally(() => { if (!cancelled) draco.dispose(); });
@@ -87,7 +107,7 @@ export function useWorldAssets(base: string) {
       owned.forEach(disposeScene);
       owned.clear();
     };
-  }, [base]);
+  }, [base, renderer]);
   if (error) throw error;
   return asset;
 }

@@ -3,13 +3,14 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { Component, useCallback, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
-import { ArrowDown, ArrowUpRight, Check, Code2, Compass, Gamepad2, Globe2, Layers, MapPin, MoveHorizontal, Pause, Play, RotateCcw, Smartphone } from 'lucide-react';
+import { ArrowUpRight, Check, Code2, Compass, Gamepad2, Globe2, Layers, MapPin, MoveHorizontal, Pause, Play, RotateCcw, Smartphone } from 'lucide-react';
 import { FilmButton } from '@/components/film';
 import { heroDestinations, heroMapLocations, type HeroDestinationId, type HeroLocationId } from '@/lib/hero-destinations';
 import { tourStopFor } from '@/lib/world-tour';
 import { cn } from '@/lib/utils';
 import { createMotion, stopMomentum } from './orbit/state';
 import { useWorldTour } from './orbit/use-world-tour';
+import { LiquidSlogan } from './liquid-slogan';
 import styles from './orbit-delivery-hero.module.css';
 
 const PlanetScene = dynamic(() => import('./orbit/planet-scene'), { ssr: false });
@@ -38,7 +39,7 @@ export default function OrbitDeliveryHero({ className, theme = 'dark', assetBase
   const labels = useRef<(HTMLButtonElement | null)[]>([]);
   const drag = useRef<{ id: number; x: number; y: number; touch: boolean } | null>(null);
   const [mounted, setMounted] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [tabVisible, setTabVisible] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [reduced, setReduced] = useState(false);
@@ -86,15 +87,42 @@ export default function OrbitDeliveryHero({ className, theme = 'dark', assetBase
       if (!entry.isIntersecting) release();
     }, { threshold: 0.01 });
     if (stage.current) observer.observe(stage.current);
-    let frame = requestAnimationFrame(() => { frame = requestAnimationFrame(() => setMounted(true)); });
     return () => {
-      cancelAnimationFrame(frame);
       query.removeEventListener('change', preference);
       document.removeEventListener('visibilitychange', visibility);
       dialogs.disconnect();
       observer.disconnect();
     };
   }, [release, tour.manual]);
+
+  useEffect(() => {
+    if (mounted || !visible || !tabVisible) return;
+    let cancelled = false, queued = false;
+    let idle: number | undefined, timer: number | undefined;
+    let paint: PerformanceObserver | undefined;
+    const boot = () => { if (!cancelled) setMounted(true); };
+    const queue = () => {
+      if (cancelled || queued) return;
+      queued = true;
+      paint?.disconnect();
+      window.clearTimeout(timer);
+      if (typeof window.requestIdleCallback === 'function') idle = window.requestIdleCallback(boot, { timeout: 1000 });
+      else timer = window.setTimeout(boot, 0);
+    };
+    // Paint the headline and poster before creating a GPU context. A section
+    // opened below the fold loads its 3D assets only when the globe is in view.
+    if (typeof PerformanceObserver !== 'undefined' && PerformanceObserver.supportedEntryTypes.includes('paint') && !performance.getEntriesByName('first-contentful-paint').length) {
+      paint = new PerformanceObserver(entries => { if (entries.getEntries().some(entry => entry.name === 'first-contentful-paint')) queue(); });
+      paint.observe({ type: 'paint', buffered: true });
+      timer = window.setTimeout(queue, 1500);
+    } else queue();
+    return () => {
+      cancelled = true;
+      paint?.disconnect();
+      window.clearTimeout(timer);
+      if (idle !== undefined) window.cancelIdleCallback(idle);
+    };
+  }, [mounted, visible, tabVisible]);
 
   function choose(id: HeroLocationId | null) {
     release();
@@ -136,19 +164,17 @@ export default function OrbitDeliveryHero({ className, theme = 'dark', assetBase
     setPlaying(next);
   }
 
+  const projectHref = projectChoice && mode === 'manual' ? `/baslayalim?tur=${projectChoice}` : '/baslayalim';
+  const description = <><p className={styles.description}>İyi görünen. İyi çalışan.<br />Senin dünyana uyan yazılımlar.</p><p className={styles.aside}>Biraz merak. Bolca özen.</p></>;
+
   return <section className={cn(styles.hero, className)} data-theme={theme} aria-labelledby={`${id}-heading`}>
     <div className={styles.inner}>
-      <div className={styles.copy}>
-        <p className={styles.eyebrow}><span /> İyi fikirlere zaafımız var.</p>
-        <h1 id={`${id}-heading`} className={styles.heading}><span>Good </span><span>enough<span className={styles.period}>.</span></span></h1>
-        <p className={styles.description}>İyi görünen. İyi çalışan.<br />Senin dünyana uyan yazılımlar.</p>
-        <p className={styles.aside}>Biraz merak. Bolca özen.</p>
-        <div className={styles.actions}>
-          <Link className="button button-lime" href={projectChoice && mode === 'manual' ? `/baslayalim?tur=${projectChoice}` : '/baslayalim'} prefetch={false}>Fikrini anlat <ArrowUpRight size={18} /></Link>
-          <FilmButton />
-        </div>
-        <a className={styles.scrollLink} href="#oyun-alani"><span>Biraz da yaptıklarımıza bak.</span><ArrowDown size={14} /></a>
-      </div>
+      <LiquidSlogan
+        id={`${id}-heading`} className={styles.copy} headingClassName={styles.heading}
+        before={<p className={styles.eyebrow}><span /> İyi fikirlere zaafımız var.</p>}
+        after={<>{description}<div className={styles.actions}><Link className="button button-lime" href={projectHref} prefetch={false}>Fikrini anlat <ArrowUpRight size={18} /></Link><FilmButton /></div></>}
+        lensAfter={<>{description}<div className={styles.actions}><span className="button button-lime">Fikrini anlat <ArrowUpRight size={18} /></span><span className="button button-ghost"><Play size={15} fill="currentColor" />Nasıl mı?</span></div></>}
+      />
 
       <div ref={visual} className={styles.visual}>
         <div className={styles.worldNote} aria-hidden="true"><span>Fikrin nereye,<br />biz oraya.</span><ArrowUpRight size={25} strokeWidth={1} /></div>
@@ -195,7 +221,7 @@ export default function OrbitDeliveryHero({ className, theme = 'dark', assetBase
             <div className={styles.placeholderGlobe} />
             <picture>
               <source media="(max-width: 700px)" srcSet="/hero/world-closeup-mobile.webp" />
-              <img src="/hero/world-closeup.webp" width={742} height={600} alt="" fetchPriority="low" />
+              <img src="/hero/world-closeup.webp" width={742} height={600} alt="" fetchPriority="high" decoding="async" />
             </picture>
           </div>
           <div className={cn(styles.canvas, ready && styles.canvasReady)}>

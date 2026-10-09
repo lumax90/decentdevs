@@ -1,8 +1,11 @@
+import { whatsappLink } from './whatsapp';
+
 export const site = {
   name: 'Decent Devs',
   slogan: 'Good enough.',
   url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://decentdevs.com').replace(/\/$/, ''),
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || '',
+  whatsappHref: whatsappLink(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER),
   description: 'İyi görünen, iyi çalışan web siteleri ve uygulamalar. Decent Devs; web, mobil ve özel yazılım geliştiren bağımsız bir dijital stüdyo.',
 };
 

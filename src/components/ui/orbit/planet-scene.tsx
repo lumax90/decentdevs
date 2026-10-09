@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { BufferGeometry, Group, Line, LineDashedMaterial, MathUtils, OrthographicCamera, Quaternion, Vector3 } from 'three';
 import { heroMapLocations, type HeroLocationId } from '@/lib/hero-destinations';
@@ -62,7 +62,12 @@ function RenderQuality({ active, lowPower }: { active: boolean; lowPower: boolea
     s.time = 0; s.frames = 0;
     if (next !== dpr) { setDpr(next); s.warmup = 1; }
   });
-  useEffect(() => { gl.setClearColor('#000000', 0); }, [gl]);
+  useEffect(() => {
+    gl.setClearColor('#000000', 0);
+    // Synchronous shader log queries stall the GPU on first use. Keep the
+    // diagnostics in development; production uses the precompiled programs.
+    gl.debug.checkShaderErrors = process.env.NODE_ENV !== 'production';
+  }, [gl]);
   return null;
 }
 
@@ -88,19 +93,26 @@ function RouteTrail({ asset, surface, selected, revision }: { asset: WorldAssets
 }
 
 function World(props: PlanetSceneProps) {
-  const asset = useWorldAssets(props.assetBaseUrl);
+  const { invalidate, gl, size, camera, scene } = useThree();
+  const asset = useWorldAssets(props.assetBaseUrl, gl);
   const root = useRef<Group>(null), planet = useRef<Group>(null), runner = useRef<Group>(null);
   const globe = useMemo(createGlobeMotion, []);
   const surface = useRef(createSurfaceMotion());
   const radius = useRef(2.2), arrival = useRef<number | null>(null);
   const dwell = useRef(createLocationDwell());
   const frame = useMemo(() => ({ screenUp: new Vector3(), neutral: new Vector3(), velocity: new Vector3(), cameraFront: new Vector3(), anchor: new Vector3(), inverseRunner: new Quaternion() }), []);
-  const { invalidate, gl, size } = useThree();
   const { centerY } = getWorldFraming(size.width, size.height);
 
   useEffect(() => {
-    if (asset) { props.onReady(); invalidate(); }
-  }, [asset, props.onReady, invalidate]);
+    if (!asset) return;
+    let cancelled = false;
+    // Include the actual lights, pins and route in the warm-up. The render
+    // loop starts only after all of their shader programs have linked.
+    void gl.compileAsync(scene, camera).then(() => {
+      if (!cancelled) { props.onReady(); invalidate(); }
+    }).catch(() => { if (!cancelled) props.onFailure(); });
+    return () => { cancelled = true; };
+  }, [asset, gl, scene, camera, props.onReady, props.onFailure, invalidate]);
   useEffect(() => { invalidate(); }, [props.active, props.playing, props.reduced, props.revision, invalidate]);
   useEffect(() => {
     const canvas = gl.domElement;
@@ -172,10 +184,12 @@ function World(props: PlanetSceneProps) {
 
 export default function PlanetScene(props: PlanetSceneProps) {
   const [lowPower] = useState(() => matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 4) <= 4);
+  const [prepared, setPrepared] = useState(false);
+  const ready = useCallback(() => { setPrepared(true); props.onReady(); }, [props.onReady]);
   return <Canvas
     orthographic camera={{ position: [0, 0, 9], zoom: 100, near: 0.1, far: 30 }}
     dpr={lowPower ? [1, 1.25] : [1, 1.75]}
-    frameloop={!props.active ? 'never' : props.reduced ? 'demand' : 'always'}
+    frameloop={!prepared || !props.active ? 'never' : props.reduced ? 'demand' : 'always'}
     gl={{ antialias: true, alpha: true, powerPreference: lowPower ? 'low-power' : 'high-performance' }}
     fallback={<span>Projenin yönünü alttaki seçeneklerden belirleyebilirsin.</span>}
     aria-hidden="true"
@@ -186,6 +200,6 @@ export default function PlanetScene(props: PlanetSceneProps) {
     <hemisphereLight args={['#f3f5e9', '#77738d', 1.3]} />
     <directionalLight position={[-3, 5, 5]} intensity={2.7} color="#fff8ef" />
     <directionalLight position={[3, 2, -2]} intensity={1.5} color="#d5d1ff" />
-    <World {...props} />
+    <World {...props} onReady={ready} />
   </Canvas>;
 }

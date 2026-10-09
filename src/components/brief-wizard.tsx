@@ -35,6 +35,7 @@ export function BriefWizard() {
   const [result, setResult] = useState<Result | null>(null);
   const key = useRef('');
   const heading = useRef<HTMLHeadingElement>(null);
+  const successHeading = useRef<HTMLHeadingElement>(null);
   const didNavigate = useRef(false);
 
   useEffect(() => {
@@ -68,6 +69,11 @@ export function BriefWizard() {
   useEffect(() => {
     if (didNavigate.current) heading.current?.focus({ preventScroll: true });
   }, [step]);
+  useEffect(() => {
+    if (!result) return;
+    successHeading.current?.focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  }, [result]);
 
   function update<K extends keyof BriefDraft>(field: K, value: BriefDraft[K]) {
     key.current = '';
@@ -106,8 +112,8 @@ export function BriefWizard() {
       setErrors(problems); return;
     }
     setSending(true); setServerError('');
-    key.current ||= crypto.randomUUID();
     try {
+      key.current ||= crypto.randomUUID();
       try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, step, key: key.current, savedAt: Date.now() })); } catch { /* Optional storage. */ }
       const response = await fetch('/api/brief', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': key.current }, body: JSON.stringify(parsed.data), signal: AbortSignal.timeout(20000) });
       const body = await response.json();
@@ -117,22 +123,25 @@ export function BriefWizard() {
       }
       setResult({ reference: body.reference, markdown: body.markdown, deliveryMode: body.deliveryMode });
       try { sessionStorage.removeItem(STORAGE_KEY); } catch { /* Optional storage. */ }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
-      setServerError(error instanceof Error && error.name !== 'TimeoutError' ? error.message : 'Bağlantı biraz yavaş kaldı. Notların burada; tekrar deneyebilirsin.');
+      setServerError(error instanceof TypeError || error instanceof SyntaxError
+        ? 'Bağlantıyı kontrol edip tekrar deneyebilir misin? Cevapların burada duruyor.'
+        : error instanceof Error && !['TimeoutError', 'AbortError'].includes(error.name)
+          ? error.message
+          : 'Bağlantı biraz yavaş kaldı. Notların burada; tekrar deneyebilirsin.');
     } finally { setSending(false); }
   }
 
-  if (result) return <div className="brief-success container"><BrandMark /><span className="eyebrow">GÜZEL BİR BAŞLANGIÇ</span><h1>Notunu aldık<span>.</span></h1><p>Fikrin artık derli toplu bir proje özeti.<br />Bir kopyası sende de kalsın.</p><span className="brief-reference">{result.reference}</span><div className="success-actions"><button type="button" className="button button-lime" onClick={() => downloadBrief(result.markdown, result.reference)}>Proje özetimi indir <Download size={17} /></button><Link className="button button-ghost" href="/">Stüdyoya dön <ArrowUpRight size={17} /></Link></div>{draft.slack && <p className="success-note">Slack üzerinden devam etme tercihini de not ettik.</p>}{result.deliveryMode === 'local' && <p className="local-mode-note">Bu önizlemede brief yerel olarak kaydedildi. E-posta ve Slack bildirimleri, bağlantılar yapılandırıldığında devreye girer.</p>}</div>;
+  if (result) return <div className="brief-success container"><BrandMark /><span className="eyebrow">GÜZEL BİR BAŞLANGIÇ</span><h1 ref={successHeading} tabIndex={-1}>Notunu aldık<span>.</span></h1><p>Fikrin artık derli toplu bir proje özeti.<br />Bir kopyası sende de kalsın.</p><span className="brief-reference">{result.reference}</span><div className="success-actions"><button type="button" className="button button-lime" onClick={() => downloadBrief(result.markdown, result.reference)}>Proje özetimi indir <Download size={17} /></button><Link className="button button-ghost" href="/">Stüdyoya dön <ArrowUpRight size={17} /></Link></div>{draft.slack && <p className="success-note">Slack üzerinden devam etme tercihini de not ettik.</p>}{result.deliveryMode === 'local' && <p className="local-mode-note">Bu önizlemede brief yerel olarak kaydedildi. E-posta ve Slack bildirimleri, bağlantılar yapılandırıldığında devreye girer.</p>}</div>;
 
   return <div className="brief-page container">
     <div className="brief-intro"><Link href="/" className="back-link"><ArrowLeft size={15} /> Stüdyoya dön</Link><span className="eyebrow">HER ŞEY BİR FİKİRLE BAŞLAR.</span><h1>Aklındakini<br />biraz açalım<span>.</span></h1><p>Birkaç iyi soru soracağız. Cevapların, projenin ilk sayfasına dönüşecek.</p></div>
-    {resumed && <div className="draft-resumed"><span><Check size={15} /> Kaldığın yeri hatırladık.</span><button type="button" onClick={() => { setDraft(emptyDraft); setStep(0); setResumed(false); key.current = ''; }}>Yeni bir başlangıç</button><button type="button" aria-label="Taslak bildirimini kapat" onClick={() => setResumed(false)}><X size={15} /></button></div>}
+    {resumed && <div className="draft-resumed"><span><Check size={15} /> Kaldığın yeri hatırladık.</span><button type="button" disabled={sending} onClick={() => { setDraft(emptyDraft); setStep(0); setResumed(false); setErrors({}); setServerError(''); setSummaryOpen(false); key.current = ''; }}>Yeni bir başlangıç</button><button type="button" aria-label="Taslak bildirimini kapat" onClick={() => setResumed(false)}><X size={15} /></button></div>}
     <div className="brief-layout">
       <div className="brief-form-column" id="brief-form">
         <nav className="brief-steps" aria-label="Proje formu adımları">{steps.map((label, i) => <button type="button" key={label} aria-current={step === i ? 'step' : undefined} disabled={i > step || sending} onClick={() => move(i)}><span>{i < step ? <Check size={12} /> : `0${i + 1}`}</span><span>{label}</span></button>)}</nav>
-        <form className="brief-form" noValidate onSubmit={e => { e.preventDefault(); if (!sending) { if (step < 4) next(); else void submit(); } }}>
-          <div className="form-step" key={step}>
+        <form className="brief-form" noValidate aria-busy={sending} onSubmit={e => { e.preventDefault(); if (!sending) { if (step < 4) next(); else void submit(); } }}>
+          <fieldset className="form-step" key={step} disabled={sending}>
             <span className="step-kicker">{step + 1} / 5 · {['BAŞLANGIÇ NOKTASI', 'ÖNCELİKLER', 'MEVCUT DURUM', 'TAKVİM', 'SON BİR KONTROL'][step]}</span>
             <h2 ref={heading} tabIndex={-1}>{['Neyi hayata geçiriyoruz?', 'İlk sürümde neler olsun?', 'Elimizde neler var?', 'Aklındaki takvim nasıl?', 'Bir de tanışalım.'][step]}</h2>
             <p className="step-description">{['Birden fazla seçim yapabilirsin. Henüz adı konmamış bir fikir de olur.', 'En önemli olanları işaretle. Ayrıntıları birlikte netleştiririz.', 'Hazır olanlar, başlayacağımız yeri belirlememize yardımcı olur.', 'Kesin bir tarih gerekmiyor. Fikrinin hangi aşamada olduğunu bilmemiz yeterli.', 'Yandaki özet senin söylediklerinle oluştu. İstediğin bölümü düzenleyebilirsin.'][step]}</p>
@@ -171,7 +180,7 @@ export function BriefWizard() {
               <p className="privacy-note">Bilgilerini bu proje talebini değerlendirmek ve seninle iletişim kurmak için kullanırız. <Link href="/gizlilik" target="_blank">Gizlilik notumuz ↗</Link></p>
               <div className="honeypot" aria-hidden="true"><label htmlFor="fax">Fax<input id="fax" name="fax" tabIndex={-1} autoComplete="off" value={draft.fax} onChange={e => update('fax', e.target.value)} /></label></div>
             </>}
-          </div>
+          </fieldset>
           {serverError && <div className="submit-error" role="alert">{serverError}</div>}
           <div className="form-navigation"><button type="button" className="form-back" disabled={step === 0 || sending} onClick={() => move(step - 1)}><ArrowLeft size={16} /> Geri</button><span>{step === 4 ? 'Güzel bir başlangıç olacak.' : 'Emin olmadığın şeyleri birlikte buluruz.'}</span><button type="submit" className="button button-lime" disabled={sending || !ready}>{sending ? <><LoaderCircle className="spin" size={17} /> Kaydediliyor</> : step === 4 ? <>Notumu gönder <ArrowUpRight size={17} /></> : <>Devam <ArrowRight size={17} /></>}</button></div>
         </form>
@@ -179,10 +188,10 @@ export function BriefWizard() {
       <aside className={`brief-summary ${summaryOpen ? 'summary-open' : ''}`}>
         <button type="button" className="summary-toggle" aria-expanded={summaryOpen} aria-controls="summary-paper" onClick={() => setSummaryOpen(!summaryOpen)}><span>Projenin ilk sayfası <small>Cevaplarınla şekilleniyor</small></span><ChevronDown size={19} /></button>
         <div className="summary-paper" id="summary-paper"><div className="paper-top"><BrandMark /><span>PROJE NOTU / TASLAK</span><span className="paper-dot" /></div><h2>Projenin<br />ilk sayfası<span>.</span></h2><p className="paper-subtitle">İyi bir başlangıç, net bir fikir.</p>
-          <div className="paper-section"><span>NE YAPIYORUZ? <button type="button" aria-label="Proje fikrini düzenle" onClick={() => move(0)}><Pencil size={11} /></button></span>{draft.types.length ? <strong>{draft.types.map(t => optionLabel(projectTypes, t)).join(' + ')}</strong> : <i className="paper-placeholder">Birazdan şekillenecek…</i>}{draft.goal && <p className="paper-goal">{draft.goal}</p>}</div>
-          <div className="paper-section"><span>İLK SÜRÜM <button type="button" aria-label="İhtiyaçları düzenle" onClick={() => move(Math.min(step, 1))}><Pencil size={11} /></button></span><div className="paper-tags">{draft.features.length ? draft.features.map(f => <span key={f}>{optionLabel(features, f)}</span>) : <i className="paper-placeholder">{draft.featuresUnsure ? 'Birlikte netleştireceğiz.' : 'Önceliklerini bekliyor.'}</i>}</div>{draft.types.includes('mobile') && <p className="paper-meta">{platformLabels[draft.platform]}</p>}</div>
-          <div className="paper-section"><span>BAŞLANGIÇ NOKTASI <button type="button" aria-label="Hazır materyalleri düzenle" onClick={() => move(Math.min(step, 2))}><Pencil size={11} /></button></span><p className="paper-meta">{draft.assets.length ? draft.assets.map(a => optionLabel(assetOptions, a)).join(', ') : 'Birlikte şekillenecek.'}</p></div>
-          <div className="paper-section"><span>TAKVİM <button type="button" aria-label="Takvimi düzenle" onClick={() => move(Math.min(step, 3))}><Pencil size={11} /></button></span><p className="paper-meta">{draft.timing === 'fixed' && draft.launchDate ? draft.launchDate : optionLabel(timingOptions, draft.timing)}</p></div>
+          <div className="paper-section"><span>NE YAPIYORUZ? <button type="button" disabled={sending} aria-label="Proje fikrini düzenle" onClick={() => move(0)}><Pencil size={11} /></button></span>{draft.types.length ? <strong>{draft.types.map(t => optionLabel(projectTypes, t)).join(' + ')}</strong> : <i className="paper-placeholder">Birazdan şekillenecek…</i>}{draft.goal && <p className="paper-goal">{draft.goal}</p>}</div>
+          <div className="paper-section"><span>İLK SÜRÜM <button type="button" disabled={sending} aria-label="İhtiyaçları düzenle" onClick={() => move(Math.min(step, 1))}><Pencil size={11} /></button></span><div className="paper-tags">{draft.features.length ? draft.features.map(f => <span key={f}>{optionLabel(features, f)}</span>) : <i className="paper-placeholder">{draft.featuresUnsure ? 'Birlikte netleştireceğiz.' : 'Önceliklerini bekliyor.'}</i>}</div>{draft.types.includes('mobile') && <p className="paper-meta">{platformLabels[draft.platform]}</p>}</div>
+          <div className="paper-section"><span>BAŞLANGIÇ NOKTASI <button type="button" disabled={sending} aria-label="Hazır materyalleri düzenle" onClick={() => move(Math.min(step, 2))}><Pencil size={11} /></button></span><p className="paper-meta">{draft.assets.length ? draft.assets.map(a => optionLabel(assetOptions, a)).join(', ') : 'Birlikte şekillenecek.'}</p></div>
+          <div className="paper-section"><span>TAKVİM <button type="button" disabled={sending} aria-label="Takvimi düzenle" onClick={() => move(Math.min(step, 3))}><Pencil size={11} /></button></span><p className="paper-meta">{draft.timing === 'fixed' && draft.launchDate ? draft.launchDate : optionLabel(timingOptions, draft.timing)}</p></div>
           <div className="paper-bottom"><span className="paper-open-questions"><span className="tiny-dot" /> {openQuestions(draft).length} konu birlikte netleşecek.</span><span>good enough for a start.</span></div>
         </div>
         <p className="summary-footnote"><Check size={13} /> Göndermeden önce her şeyi düzenleyebilirsin.</p>

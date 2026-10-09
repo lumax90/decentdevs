@@ -2,12 +2,13 @@
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import Image from 'next/image';
 import { Play, X } from 'lucide-react';
 
 const FilmContext = createContext<() => void>(() => {});
 const studioFilm = {
-  src: '/film/intro/music-previews/decent-devs-digital-gravity-voice-music.mp4',
-  poster: '/film/intro/poster.jpg',
+  src: '/film/intro/music-previews/decent-devs-digital-gravity-voice-music.mp4?v=04-1',
+  poster: '/film/intro/poster-04.jpg',
   captions: '/film/intro/decent-devs-intro-markus-v4.vtt',
 };
 
@@ -56,9 +57,12 @@ export function FilmCard() {
   return <button type="button" className="film-card" onClick={show} aria-label="Bir fikrin yolculuğu: stüdyo filmini izle">
     <div className="film-poster-backdrop" />
     {/* A generated Remotion still; the typographic layer also works before rendering. */}
-    <img src={studioFilm.poster} alt="Good enough. — Decent Devs stüdyo filminden bir kare" width={1920} height={1080} loading="lazy" />
-    <span className="film-card-label"><span className="tiny-dot" /> THE DECENT WAY</span>
-    <span className="film-play"><Play size={23} fill="currentColor" /><span>Filmi izle</span></span>
+    <picture>
+      <source media="(max-width: 700px)" srcSet="/film/intro/poster-04-mobile.webp" />
+      <Image src={studioFilm.poster} alt="Good enough. — Decent Devs stüdyo filminden bir kare" width={1920} height={1080} sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1150px) calc(100vw - 64px), (max-width: 1296px) calc(100vw - 96px), 1200px" />
+    </picture>
+    <span className="film-card-label"><span className="tiny-dot" /> BİR FİKRİN YOLCULUĞU</span>
+    <span className="film-play"><Play size={23} fill="currentColor" /><span>Filmi izle</span><span className="film-duration">01:00</span></span>
     <span className="film-card-note">Kulaklıkla biraz daha güzel.</span>
   </button>;
 }

@@ -2,7 +2,7 @@
 
 **Good enough.**
 
-Butik bir dijital stüdyo için Türkçe, responsive ve etkileşimli bir site. Next.js 16 / React 19, TypeScript, yerel yazı tipleri, Remotion filmi ve Python ile üretilmiş özgün ses.
+Butik bir dijital stüdyo için Türkçe, responsive ve etkileşimli bir site. Next.js 16 / React 19, TypeScript, yerel yazı tipleri, etkileşimli 3B dünya ve Markus seslendirmesi + Digital Gravity müzikli Remotion filmi.
 
 ## Çalıştırma
 
@@ -44,11 +44,29 @@ Metinler: `src/lib/content.ts` · Marka/alan adı: `src/lib/site.ts` · Form se�
 
 ### Yeni hero ve UI altyapısı
 
+Seçilen marka işareti **04**: yumuşak D gövdesi, `>` ve `|` gözler, çok hafif ve simetrik tebessümlü alt çizgi. Web arayüzü ve Remotion sahneleri `src/components/brand.tsx` bileşenini paylaşır. Favicon `public/icon.svg` içindedir.
+
+Paylaşım görseli, Apple simgesi ve film kapakları `npm run brand:render` ile hazırlanır. `npm run brand:render -- --film`, filmin görsellerini de günceller ve mevcut onaylı Markus + Digital Gravity sesini doğrudan taşır; çözümlenmiş sesin SHA-256 eşitliğini kontrol eder. Üretim kayıtları ve önceki görseller `artifacts/brand/04/` altında tutulur.
+
 Hero: `src/components/ui/orbit-delivery-hero.tsx` · Hedefler: `src/lib/hero-destinations.ts` · Stiller: bileşenin `.module.css` dosyası.
 
 Three.js / React Three Fiber, Tailwind CSS 4 ve shadcn uyumlu `components.json` kurulu. UI dizini `src/components/ui`; Tailwind utility'leri `tw:` öneki kullanır. Model üretimi, hareket, form aktarımı ve kullanım ayrıntıları: [Etkileşimli hero](docs/05-etkilesimli-hero.md).
 
 Konumlar ve medya: `src/lib/world-tour.ts` · Yakın rota/bekleme: `src/lib/location-routing.ts` · Animasyonlar: `remotion/tour/` · Üretim: `npm run hero:tour-render`. Elle bir konuma yaklaşarak kısa süre beklemek, işaretin üzerinde durmak veya işarete tıklamak ilgili canlandırmayı açar. Keşif, bulunulan yerden en yakın görülmemiş konumla devam eder.
+
+Sloganın üzerindeki mercek, Hyperiux Vault'un Liquid Glass Cursor bileşeninden uyarlandı: `src/components/ui/liquid-glass-cursor.tsx`. Motion yayları, SVG kırılma haritası ve renk ayrışması kullanır. `liquid-slogan.tsx` içindeki aynı boyutta italik **is not**, yüzeyle aynı siyah renktedir; yalnızca mercekteki kopyası aydınlanır. Etkinleşme alanı slogandır; merceğin optik kaynağı üstteki kısa notu ve alttaki açıklamaları da kapsar, böylece camın içine giren her metin birlikte büyür. Fareyle gezinme, dokunup gezdirme ve klavyeyle odaklanıp ok tuşlarını kullanma desteklenir. Azaltılmış hareket tercihinde mercek gecikmesiz takip eder.
+
+### WhatsApp hızlı iletişim
+
+`NEXT_PUBLIC_WHATSAPP_NUMBER` alanına yayınlanacak **iş numarası**, ülke koduyla birlikte girilir. Alan boş veya geçersizken balon gösterilmez. Numara eklendikten sonra yeniden build/deploy yapılır; Docker build argümanı da hazırdır.
+
+Sağ alttaki lime balon, koyu bir karşılama paneli açar:
+
+> Merhaba! Aklındaki projeyi kısaca anlat, ilk fırsatta dönüş yapalım.
+
+WhatsApp bağlantısı ziyaretçinin mesaj kutusunu “Merhaba Decent Devs! Bir projem hakkında görüşmek istiyorum.” metniyle açar. Ziyaretçi Gönder'e basar. WhatsApp içinden ayrıca otomatik yanıt istenirse Business uygulamasının **Karşılama mesajı** özelliğine karşılama metni girilir.
+
+Bileşen: `src/components/whatsapp-contact.tsx` · Metinler ve numara doğrulama: `src/lib/whatsapp.ts`. İletişim balonu API veya harici widget hizmeti kullanmaz. Açılış, kapanış ve ikon geçişleri Motion ile yapılır; azaltılmış hareket tercihine uyar. WhatsApp simgesi Bootstrap Icons'tan alınmıştır (MIT, `public/licenses/bootstrap-icons.txt`).
 
 ## Gerçek talep akışı
 
@@ -105,9 +123,9 @@ curl -X POST https://decentdevs.com/api/internal/notifications \
 
 Gizlilik notunun işletmenin gerçek unvanı, iletişim adresi ve operasyonel saklama pratiğiyle yayında eşleşmesi gerekir.
 
-## Film ve ses
+## Arşivdeki kısa film
 
-Hazır dosya: **`public/film/decent-devs.mp4`** — 1920×1080, 30 FPS, 600 video karesi, stereo AAC ses. Tarayıcıda standart video olarak sunulur; Remotion çalışma zamanı site ziyaretçisine yüklenmez.
+İlk 20 saniyelik çalışma: **`public/film/decent-devs.mp4`** — 1920×1080, 30 FPS, 600 video karesi, stereo AAC ses. Kaynakları ve aşağıdaki komutlar arşiv çalışmasına aittir. Sitenin kullandığı 60 saniyelik film bir sonraki bölümde kayıtlıdır.
 
 - `remotion/root.tsx`: beş sahne, kare bazlı animasyonlar, sosyal kart ve uygulama simgesi.
 - `scripts/generate_audio.py`: Python standart kütüphanesiyle özgün synth/pad, pluck, hafif perküsyon ve geçiş sesleri. Harici sample veya müzik API'si kullanmaz.
@@ -136,11 +154,19 @@ npx remotion still remotion/index.ts SocialCard public/og.png
 npx remotion still remotion/index.ts AppIcon public/apple-icon.png
 ```
 
-## Anlatımlı tanıtım filmi
+## Yayındaki anlatımlı tanıtım filmi
 
-Yeni 60 saniyelik film, ayrı `remotion/intro/` giriş noktasında bulunur. Türkçe ElevenLabs seslendirmesi, tasarım/mimari karşılaştırmaları, özgün müzik, efektler ve zamanlanmış altyazılar içerir.
+Onaylı 60 saniyelik / 1080p / 60 FPS film **Markus seslendirmesi + Digital Gravity** içerir. Ek efektlerin kazancı sıfırdır; müzik konuşma sırasında geri çekilir. Tarayıcı standart MP4 oynatır; Remotion çalışma zamanı yüklenmez.
 
-Güncel ses **Markus Kästler / Eleven v4**, üretim ayarları stabilite 0,36, benzerlik 1,0 ve hız 1,0'dır. Üretim ve yeniden render komutları: [Tanıtım filmi notları](docs/04-tanitim-filmi.md). Video yolu: `public/film/intro/decent-devs-intro-markus-v4.mp4`.
+Güncel ses **Markus Kästler / Eleven v4**, üretim ayarları stabilite 0,36, benzerlik 1,0 ve hız 1,0'dır.
+
+- Yayın videosu: `public/film/intro/music-previews/decent-devs-digital-gravity-voice-music.mp4`
+- Altyazı: `public/film/intro/decent-devs-intro-markus-v4.vtt`
+- Kapak: `public/film/intro/poster-04.jpg`
+- Mobil kapak: `public/film/intro/poster-04-mobile.webp` (`npm run intro:poster` ile hazırlanır)
+- Kullanıldığı yer: `src/components/film.tsx`
+
+Ses kaynaklarının bulunduğu çalışma ortamında onaylı miks `npm run intro:approved` ile yeniden oluşturulur. Bu komut `--no-fx` kullanır. Kaynak Digital Gravity dosyası `artifacts/intro/music-candidates/digital-gravity/source.wav` altındadır; yerel üretim kaynakları Git dışında tutulur. `intro:prepare` ve `intro:render` sahne/temel ses üretim hattıdır; son yayın miksini oluşturmak için ardından `intro:approved` çalıştırılır. Ayrıntılar: [Tanıtım filmi notları](docs/04-tanitim-filmi.md).
 
 ## SEO ve erişilebilirlik
 
@@ -166,6 +192,15 @@ npm run test:e2e
 ```
 
 Uçtan uca testler **3101** portunda ayrı üretim sunucusu ve `artifacts/e2e-data` veritabanı kullanır. E-posta/Slack anahtarları test ortamında boşaltılır. Test kapsamı; gerçek demo etkileşimleri, film, form devamı/gönderimi/indirme, API tekrarları, statik SEO ve otomatik WCAG kontrolleridir.
+
+### Yayın öncesi son kontrol — 8 Ekim 2026
+
+- 29 birim/entegrasyon testi ve 28 masaüstü/mobil senaryosu doğrulandı; son hero değişikliklerinde ilgili 10 senaryo tekrar geçti.
+- Bağlantı kesilince cevapları koruyan yeniden gönderim, kayıt sırasında tutarlı form durumu ve başarı başlığına klavye odağı kontrol edildi.
+- Mercek yalnızca sloganda etkinleşir; içine giren komşu metinlerin konum ve büyütme oranı masaüstü/mobilde doğrulandı.
+- Küre, ilk içerik boyandıktan ve görünür olduktan sonra hazırlanır. Doku yüklemeleri parçalara ayrılır; tüm sahnenin shader hazırlığı tamamlanınca animasyon başlar.
+- Üretim build'inde Lighthouse mobil ölçümü: **Performans 71 · Erişilebilirlik 100 · İyi uygulamalar 100 · SEO 100**. LCP **3,7 sn**, toplam engelleme süresi **670 ms**, CLS **0,002**. Ön kontroldeki engelleme süresi 1.690 ms idi. Ağır 3B ilk yükleme, mobil performans için geliştirmeye açık noktadır.
+- Üretim bağımlılık taramasında bilinen açık bulunmadı. Onaylı film 60 saniye / 1080p60, Markus + Digital Gravity olarak doğrulandı.
 
 ### Konum bazlı keşif doğrulaması — 7 Ekim 2026
 
@@ -206,4 +241,4 @@ docker compose up --build -d
 
 Alan adı/TLS yönlendirmesini 3000 portundaki uygulamaya yapın. `NEXT_PUBLIC_SITE_URL` ve isteğe bağlı `NEXT_PUBLIC_CONTACT_EMAIL` derleme zamanı değerleridir. `RATE_LIMIT_SECRET` ve `CRON_SECRET` için ayrı uzun rastgele değerler belirleyin. `TRUST_PROXY_HEADERS=true` yalnızca `X-Forwarded-For` başlığını güvenilir biçimde yeniden yazan bir reverse proxy arkasında kullanılmalıdır.
 
-Yayına bağlanacak gerçek değerler: alan adı/DNS, doğrulanmış e-posta göndericisi ve stüdyo adresi, Slack çalışma alanı bilgileri ve paylaşılabilir müşteri projeleri.
+Yayına bağlanacak gerçek değerler: alan adı/DNS, kalıcı veri diski, bildirim alacak stüdyo adresi veya Slack kanalı ve zamanlanmış bildirim bakımı. WhatsApp numarası yayın ortamında `NEXT_PUBLIC_WHATSAPP_NUMBER` build değişkenine de girilmelidir. Güncel durum ve kurulum sırası: [Yayın notları](docs/06-yayin-oncesi.md).

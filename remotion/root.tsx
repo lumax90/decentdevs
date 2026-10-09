@@ -103,7 +103,7 @@ function SocialCard() {
   return <AbsoluteFill className="film-root" style={{ background: '#111113', color: '#f5f4f1', padding: 65 }}><Fonts /><div style={{ display: 'flex', alignItems: 'center', gap: 13, fontSize: 28, letterSpacing: -1 }}><BrandMark className="social-mark" /><style>{'.social-mark{width:42px;height:42px;color:#d5f5a1}'}</style>decentdevs.</div><div style={{ fontSize: 128, letterSpacing: -9, marginTop: 78, fontWeight: 600 }}>Good enough<span style={{ color: colors.lime }}>.</span></div><div style={{ fontSize: 25, color: '#a9a0b4', marginTop: 22 }}>İyi görünen, iyi çalışan web siteleri ve uygulamalar.</div><div style={{ position: 'absolute', right: 74, top: 59, fontSize: 62, transform: 'rotate(16deg)', color: '#c9b7f7' }}>✳</div><div style={{ position: 'absolute', bottom: 56, left: 66, fontSize: 17, color: '#74707d' }}>WEB · MOBİL · ÖZEL YAZILIM</div></AbsoluteFill>;
 }
 
-function AppIcon() { return <AbsoluteFill style={{ background: '#d5f5a1', color: '#d5f5a1', padding: 9 }}><BrandMark /></AbsoluteFill>; }
+function AppIcon() { return <AbsoluteFill style={{ background: '#111113', color: '#d5f5a1', padding: 9 }}><BrandMark /></AbsoluteFill>; }
 
 export function RemotionRoot() {
   return <><Composition id="DecentFilm" component={DecentFilm} durationInFrames={600} fps={30} width={1920} height={1080} /><Composition id="SocialCard" component={SocialCard} durationInFrames={1} fps={30} width={1200} height={630} /><Composition id="AppIcon" component={AppIcon} durationInFrames={1} fps={30} width={180} height={180} /></>;
